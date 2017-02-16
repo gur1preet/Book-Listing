@@ -2,4 +2,7 @@
     <string name="app_name">Book Listing</string>
     <string name="search">Search</string>
     <string name="enter_text">Enter Text</string>
+    <string name="sample_text">Embedded Android</string>
+    <string name="sample_author">Karim Yaghmour</string>
+    <string name="subtitle">Porting, Extending, and Customizing</string>
 </resources>
