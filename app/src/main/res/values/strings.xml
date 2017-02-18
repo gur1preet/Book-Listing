@@ -5,4 +5,6 @@
     <string name="sample_text">Embedded Android</string>
     <string name="sample_author">Karim Yaghmour</string>
     <string name="subtitle">Porting, Extending, and Customizing</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_earthquakes">No books found.</string>
 </resources>

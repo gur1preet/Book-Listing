@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:id="@+id/search_query"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:hint="@string/enter_text"
             />
         <Button
+            android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -40,7 +42,7 @@
             android:layout_centerInParent="true"
             android:textAppearance="?android:textAppearanceMedium"/>
         <ProgressBar
-            android:id="@+id/loader"
+            android:id="@+id/progress"
             style="?android:progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

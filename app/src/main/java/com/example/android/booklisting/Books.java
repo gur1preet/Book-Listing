@@ -9,24 +9,24 @@ import static android.R.attr.author;
 public class Books {
 
     private String mTitle;
-    private String mSubtitle;
     private String mAuthor;
+    private String mUrl;
 
-    Books(String title, String subtitle,String author){
+    Books(String title,String author,String url){
         mTitle = title;
-        mSubtitle = subtitle;
         mAuthor = author;
+        mUrl = url;
     }
 
     public String getmTitle() {
         return mTitle;
     }
 
-    public String getmSubtitle() {
-        return mSubtitle;
-    }
-
     public String getmAuthor() {
         return mAuthor;
+    }
+
+    public String getmUrl() {
+        return mUrl;
     }
 }
