@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
 
+
         ConnectivityManager cm =
                 (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 

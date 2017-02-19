@@ -29,4 +29,5 @@ public class Books {
     public String getmUrl() {
         return mUrl;
     }
+
 }

@@ -53,9 +53,15 @@ public final class QueryUtils {
 
                 String url = volumeInfo.getString("infoLink");
 
-                JSONArray authorArray = volumeInfo.getJSONArray("authors");
-                String author=authorArray.getString(0);
+                String author="";
 
+                if (volumeInfo.has("authors")){
+                    JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                    for(int j=0;j<authorArray.length();j++){
+                        author += authorArray.getString(j);
+                        author += ", ";
+                    }
+                }
 
                 Books book = new Books(title,author,url);
                 books.add(book);
@@ -137,10 +143,8 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
         List<Books> bookses = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
         return bookses;
     }
 }
