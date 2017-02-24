@@ -78,29 +78,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mprogress.setVisibility(GONE);
         mEmptyStateTextView.setText(R.string.search_query);
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mEmptyStateTextView.setVisibility(View.INVISIBLE);
-                if (uriText != null) {
-                    mprogress.setVisibility(View.VISIBLE);
-                    cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-                    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                    boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                    if (isConnected) {
+        if(isConnected) {
+            searchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mEmptyStateTextView.setVisibility(View.INVISIBLE);
+                    if (uriText != null) {
+                        mprogress.setVisibility(View.VISIBLE);
                         bookListView.setAdapter(mAdapter);
                         LoaderManager loaderManager = getLoaderManager();
                         loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
+
                     } else {
-                        mEmptyStateTextView.setText(R.string.no_internet_connection);
-                        mprogress.setVisibility(GONE);
+                        Toast.makeText(MainActivity.this, "Entry Search Query", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(MainActivity.this, "Entry Search Query", Toast.LENGTH_LONG).show();
                 }
+            });
+        }else {
+                mEmptyStateTextView.setText(R.string.no_internet_connection);
+                mprogress.setVisibility(GONE);
             }
-        });
 
     }
 
