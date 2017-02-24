@@ -63,7 +63,7 @@ public final class QueryUtils {
                     }
                 }
 
-                Books book = new Books(title,author,url);
+                Books book = new Books(i+1,title,author,url);
                 books.add(book);
             }
 

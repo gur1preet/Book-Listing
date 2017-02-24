@@ -31,18 +31,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ProgressBar mprogress;
 
     private static String BOOKS_URL =
-            "https://www.googleapis.com/books/v1/volumes?maxResults=20&q=technology";
+            "https://www.googleapis.com/books/v1/volumes?maxResults=20&q=";
 
     private BookAdapter mAdapter;
 
     private TextView mEmptyStateTextView;
+    ConnectivityManager cm;
+    ListView bookListView;
+
+    String uriText;
+
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView bookListView = (ListView) findViewById(R.id.list);
+        EditText searchQuery = (EditText) findViewById(R.id.search_query);
+        uriText = searchQuery.getText().toString();
+
+        searchButton = (Button) findViewById(R.id.search);
+
+        bookListView = (ListView) findViewById(R.id.list);
 
             mprogress=(ProgressBar)findViewById(R.id.progress);
 
@@ -56,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     Books currentBook = mAdapter.getItem(position);
 
-                    Uri bookUri = Uri.parse(currentBook.getmUrl());
+                    Uri bookUri = Uri.parse(currentBook.getUrl());
 
                     Intent websiteIntent = new Intent(Intent.ACTION_VIEW, bookUri);
 
@@ -64,25 +75,40 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
 
+        mprogress.setVisibility(GONE);
+        mEmptyStateTextView.setText(R.string.search_query);
 
-        ConnectivityManager cm =
-                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEmptyStateTextView.setVisibility(View.INVISIBLE);
+                if (uriText != null) {
+                    mprogress.setVisibility(View.VISIBLE);
+                    cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        if(isConnected) {
-            bookListView.setAdapter(mAdapter);
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(BOOK_LOADER_ID, null, this);
-        }
-        else {
-            mEmptyStateTextView.setText(R.string.no_internet_connection);
-            mprogress.setVisibility(GONE);
-        }
+                    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                    boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                    if (isConnected) {
+                        bookListView.setAdapter(mAdapter);
+                        LoaderManager loaderManager = getLoaderManager();
+                        loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                    } else {
+                        mEmptyStateTextView.setText(R.string.no_internet_connection);
+                        mprogress.setVisibility(GONE);
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this, "Entry Search Query", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     @Override
     public Loader<List<Books>> onCreateLoader(int i, Bundle bundle) {
+        EditText searchQuery = (EditText) findViewById(R.id.search_query);
+        String uriText = searchQuery.getText().toString();
+        BOOKS_URL += uriText;
         return new BooksLoader(this, BOOKS_URL);
 
     }

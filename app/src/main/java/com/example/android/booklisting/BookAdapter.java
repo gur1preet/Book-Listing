@@ -35,11 +35,14 @@ public class BookAdapter extends ArrayAdapter<Books> {
 
         Books currentBook = getItem(position);
 
+        TextView snoTextView = (TextView) listItemView.findViewById(R.id.sno_text_view);
+        snoTextView.setText(currentBook.getSno());
+
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
-        titleTextView.setText(currentBook.getmTitle());
+        titleTextView.setText(currentBook.getTitle());
 
         TextView authorTextView = (TextView) listItemView.findViewById(R.id.author);
-        authorTextView.setText(currentBook.getmAuthor());
+        authorTextView.setText(currentBook.getAuthor());
 
         return listItemView;
     }

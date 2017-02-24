@@ -11,6 +11,7 @@ public class Books {
     private String mTitle;
     private String mAuthor;
     private String mUrl;
+    private int mSNo;
 
     Books(String title,String author,String url){
         mTitle = title;
@@ -18,15 +19,28 @@ public class Books {
         mUrl = url;
     }
 
-    public String getmTitle() {
+    Books(int sNo,String title,String author,String url){
+        mSNo = sNo;
+        mTitle = title;
+        mAuthor = author;
+        mUrl = url;
+    }
+
+    public String getSno() {
+        String temp = "";
+        temp += mSNo;
+        return temp;
+    }
+
+    public String getTitle() {
         return mTitle;
     }
 
-    public String getmAuthor() {
+    public String getAuthor() {
         return mAuthor;
     }
 
-    public String getmUrl() {
+    public String getUrl() {
         return mUrl;
     }
 
